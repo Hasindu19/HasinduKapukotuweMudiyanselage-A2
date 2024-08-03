@@ -1,3 +1,5 @@
+
+
 public class Ride {
     private String name;
     private int duration;
