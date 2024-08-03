@@ -1,9 +1,12 @@
+import java.util.LinkedList;
+import java.util.Queue;
 
-
-public class Ride {
+public class Ride implements RideInterface{
     private String name;
     private int duration;
     private Employee operator;
+    private Queue<Visitor> visitorQueue = new LinkedList<>();
+    private LinkedList<Visitor> rideHistory = new LinkedList<>();
 
     public Ride() {
         this.name = "";
@@ -43,6 +46,50 @@ public class Ride {
 
     public void assignOperator(Employee operator) {
         this.operator = operator;
+    }
+
+    @Override
+    public void addVisitorToQueue(Visitor visitor) {
+        visitorQueue.add(visitor);
+        System.out.println("Visitor added to queue.");
+    }
+
+    @Override
+    public void removeVisitorFromQueue(Visitor visitor) {
+        if (visitorQueue.remove(visitor)) {
+            System.out.println("Visitor removed from queue.");
+        } else {
+            System.out.println("Visitor not found in queue.");
+        }
+    }
+
+    @Override
+    public void printQueue() {
+        for (Visitor visitor : visitorQueue) {
+            System.out.println(visitor);
+        }
+    }
+
+    @Override
+    public void runOneCycle() {
+        if (operator == null) {
+            System.out.println("No operator assigned to the ride.");
+            return;
+        }
+        if (visitorQueue.isEmpty()) {
+            System.out.println("No visitors in the queue.");
+            return;
+        }
+        Visitor visitor = visitorQueue.poll();
+        rideHistory.add(visitor);
+        System.out.println("Ride run for one cycle with visitor: " + visitor);
+    }
+
+    @Override
+    public void printRideHistory() {
+        for (Visitor visitor : rideHistory) {
+            System.out.println(visitor);
+        }
     }
 
 }
