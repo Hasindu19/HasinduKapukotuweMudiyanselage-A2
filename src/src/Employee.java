@@ -1,31 +1,31 @@
 public class Employee extends Person{
-    private String employeeId;
-    private String position;
+    private String jobTitle;
+    private double salary;
 
     public Employee(){
         super();
-        this.employeeId = "";
-        this.position = "";
+        this.jobTitle = "";
+        this.salary = 0;
     }
-    public Employee(String name, int age, String address, String employeeId, String position) {
-        super(name, age, address);
-        this.employeeId = employeeId;
-        this.position = position;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
+    public Employee(String name, int age, String id, String jobTitle, double salary) {
+        super(name, age, id);
+        this.jobTitle = jobTitle;
+        this.salary = salary;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public String getPosition() {
-        return position;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }

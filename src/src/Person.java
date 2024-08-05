@@ -1,18 +1,17 @@
 public abstract class  Person {
     private String name;
     private int age;
-    private String address;
-
+    private String id;
     public Person(){
         this.name = "";
         this.age = 0;
-        this.address = "";
+        this.id = "";
     }
 
-    public Person(String name, int age, String address){
+    public Person(String name, int age, String id){
         this.name = name;
         this.age = age;
-        this.address = address;
+        this.id = id;
     }
 
     public String getName() {
@@ -31,12 +30,12 @@ public abstract class  Person {
         this.age = age;
     }
 
-    public String getAddress() {
-        return address;
+    public String getId() {
+        return id;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setId(String Id) {
+        this.id = id;
     }
 
 }

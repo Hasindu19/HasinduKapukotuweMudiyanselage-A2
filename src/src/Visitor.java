@@ -1,25 +1,25 @@
 public class Visitor extends Person {
-    private String visitorId;
+    private String ticketNumber;
     private String ticketType;
 
     public Visitor() {
         super();
-        this.visitorId = "";
+        this.ticketNumber = "";
         this.ticketType = "";
     }
 
-    public Visitor(String name, int age, String address, String visitorId, String ticketType) {
-        super(name, age, address);
-        this.visitorId = visitorId;
+    public Visitor(String name, int age, String id, String ticketNumber, String ticketType) {
+        super(name, age, id);
+        this.ticketNumber = ticketNumber;
         this.ticketType = ticketType;
     }
 
-    public String getVisitorId() {
-        return visitorId;
+    public String getTicketNumber() {
+        return ticketNumber;
     }
 
-    public void setVisitorId(String visitorId) {
-        this.visitorId = visitorId;
+    public void setTicketNumber(String ticketNumber) {
+        this.ticketNumber = ticketNumber;
     }
 
     public String getTicketType() {

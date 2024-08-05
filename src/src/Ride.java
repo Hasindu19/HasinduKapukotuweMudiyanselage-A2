@@ -65,8 +65,9 @@ public class Ride implements RideInterface{
 
     @Override
     public void printQueue() {
+        System.out.println("Visitors in queue:");
         for (Visitor visitor : visitorQueue) {
-            System.out.println(visitor);
+            System.out.println(visitor.getName()+","+ visitor.getAge()+","+visitor.getId()+","+visitor.getTicketNumber()+","+visitor.getTicketType());
         }
     }
 
