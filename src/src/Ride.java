@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -71,6 +72,7 @@ public class Ride implements RideInterface{
         }
     }
 
+
     @Override
     public void runOneCycle() {
         if (operator == null) {
@@ -86,11 +88,31 @@ public class Ride implements RideInterface{
         System.out.println("Ride run for one cycle with visitor: " + visitor);
     }
 
+
+    public void addVisitorToHistory(Visitor visitor) {
+        rideHistory.add(visitor);
+        System.out.println("Visitor added to ride history.");
+    }
+
+    public boolean isVisitorInHistory(Visitor visitor) {
+        return rideHistory.contains(visitor);
+    }
+
+    public int getNumberOfVisitorsInHistory() {
+        return rideHistory.size();
+    }
+
     @Override
     public void printRideHistory() {
         for (Visitor visitor : rideHistory) {
-            System.out.println(visitor);
+            System.out.println(visitor.getName()+","+ visitor.getAge()+","+visitor.getId()+","+visitor.getTicketNumber()+","+visitor.getTicketType());
         }
     }
+
+    public void sortVisitors() {
+        Collections.sort(rideHistory, new VisitorComparator());
+        System.out.println("Ride history sorted.");
+    }
+
 
 }
