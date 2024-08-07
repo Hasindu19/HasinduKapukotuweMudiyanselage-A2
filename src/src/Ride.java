@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -158,6 +156,32 @@ public class Ride implements RideInterface{
             System.out.println("Ride history successfully written to " + filename);
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    //method to the Ride class that can read the file
+    public void readRideHistoryFromFile(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] details = line.split(",");
+                if (details.length == 5) {
+                    String name = details[0];
+                    int age = Integer.parseInt(details[1]);
+                    String id = details[2];
+                    String ticketNumber = details[3];
+                    String ticketType = details[4];
+                    Visitor visitor = new Visitor(name, age, id, ticketNumber, ticketType);
+                    rideHistory.add(visitor);// Add to ride history
+                } else {
+                    System.out.println("Invalid data format in file: " + line);
+                }
+            }
+            System.out.println("Ride history successfully read from " + filename);
+        } catch (IOException e) {
+            System.out.println("Error reading from file: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing age: " + e.getMessage());
         }
     }
 

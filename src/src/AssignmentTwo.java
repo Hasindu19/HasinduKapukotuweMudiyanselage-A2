@@ -2,7 +2,7 @@
 public class AssignmentTwo {
     public static void main(String[] args) {
         AssignmentTwo assignment = new AssignmentTwo();
-        assignment.partSix();
+        assignment.partSeven();
     }
 
     public void partThree() {
@@ -119,6 +119,15 @@ public class AssignmentTwo {
     }
 
     public void partSeven(){
+        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5, 0);
+
+        String filename = "ride_history.txt";
+        System.out.println("\nReading ride history from file:");
+        ride.readRideHistoryFromFile(filename);
+
+        System.out.println("\nNumber of Visitors in ride history: " + ride.getNumberOfVisitorsInHistory());
+        System.out.println("\nVisitors in ride history:");
+        ride.printRideHistory();
     }
 
 }
