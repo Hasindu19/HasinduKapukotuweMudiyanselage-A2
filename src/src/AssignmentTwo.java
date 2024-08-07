@@ -6,7 +6,7 @@ public class AssignmentTwo {
     }
 
     public void partThree() {
-        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5, 0);
+        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5);
         Visitor visitor1 = new Visitor("Alice", 25, "V001", "T001", "Gold");
         Visitor visitor2 = new Visitor("Bob", 20, "V002", "T002", "Silver");
         Visitor visitor3 = new Visitor("Charlie", 22, "V003", "T003", "Bronze");
@@ -25,7 +25,7 @@ public class AssignmentTwo {
     }
 
     public void partFourA(){
-        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5, 0);
+        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5);
         Visitor visitor1 = new Visitor("Frank", 23, "V006", "T006", "Bronze");
         Visitor visitor2 = new Visitor("Grace", 21, "V007", "T007", "Silver");
         Visitor visitor3 = new Visitor("Hank", 24, "V008", "T008", "Gold");
@@ -45,7 +45,7 @@ public class AssignmentTwo {
     }
 
     public void partFourB(){
-        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5, 0);
+        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5);
         Visitor visitor1 = new Visitor("Zevin", 32, "V011", "T011", "Gold");
         Visitor visitor2 = new Visitor("Liam", 30, "V012", "T012", "Silver");
         Visitor visitor3 = new Visitor("Mia", 28, "V013", "T013", "Bronze");
@@ -67,7 +67,7 @@ public class AssignmentTwo {
         ride.printRideHistory();
     }
     public void partFive(){
-        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5, 0);
+        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5);
 
         ride.addVisitorToQueue(new Visitor("Alice", 25, "V101", "T001", "Regular"));
         ride.addVisitorToQueue(new Visitor("Bob", 30, "V102", "T002", "VIP"));
@@ -98,7 +98,7 @@ public class AssignmentTwo {
     }
 
     public void partSix(){
-        Ride ride = new Ride("Ferris Wheel", 15, new Employee("Jane Smith", 28, "456", "Operator", 45000), 5, 0);
+        Ride ride = new Ride("Ferris Wheel", 15, new Employee("Jane Smith", 28, "456", "Operator", 45000), 5);
 
         ride.addVisitorToQueue(new Visitor("Tom", 22, "V201", "T101", "Regular"));
         ride.addVisitorToQueue(new Visitor("Jerry", 25, "V202", "T102", "VIP"));
@@ -119,7 +119,7 @@ public class AssignmentTwo {
     }
 
     public void partSeven(){
-        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5, 0);
+        Ride ride = new Ride("Roller Coaster", 10, new Employee("John Doe", 30, "123", "Operator", 50000), 5);
 
         String filename = "ride_history.txt";
         System.out.println("\nReading ride history from file:");

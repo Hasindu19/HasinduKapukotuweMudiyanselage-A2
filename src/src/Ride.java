@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Ride implements RideInterface{
     private String name;
@@ -11,6 +13,7 @@ public class Ride implements RideInterface{
     private LinkedList<Visitor> rideHistory = new LinkedList<>();
     private int maxRiders;
     private int numOfCycles;
+    private final Lock lock = new ReentrantLock();
 
     public Ride() {
         this.name = "";
@@ -20,7 +23,7 @@ public class Ride implements RideInterface{
         this.numOfCycles = 0; // Default to 0 cycles
     }
 
-    public Ride(String name, int duration, Employee operator, int maxRiders, int numOfCycles) {
+    public Ride(String name, int duration, Employee operator, int maxRiders) {
         this.name = name;
         this.duration = duration;
         this.operator = operator;
@@ -109,44 +112,75 @@ public class Ride implements RideInterface{
             return;
         }
 
-        int riders = 0;
-        while (!visitorQueue.isEmpty() && riders < maxRiders) {
-            Visitor visitor = visitorQueue.poll();
-            addVisitorToHistory(visitor);
-            riders++;
+        lock.lock();
+        try {
+            int riders = 0;
+            while (riders < maxRiders && !visitorQueue.isEmpty()) {
+                Visitor visitor = visitorQueue.poll();
+                addVisitorToHistory(visitor);
+                riders++;
+            }
+            numOfCycles++;
+            System.out.println("Ride run successfully. Number of cycles: " + numOfCycles);
+        } finally {
+            lock.unlock();
         }
-        numOfCycles++;
-        System.out.println("Ride run for one cycle with " + riders + " visitors.");
     }
 
 
     public void addVisitorToHistory(Visitor visitor) {
-        rideHistory.add(visitor);
-        System.out.println("Visitor added to ride history.");
+        lock.lock();
+        try {
+            rideHistory.add(visitor);
+            System.out.println("Visitor added to ride history.");
+        } finally {
+            lock.unlock();
+        }
     }
 
     public boolean isVisitorInHistory(Visitor visitor) {
-        return rideHistory.contains(visitor);
+        lock.lock();
+        try {
+            return rideHistory.contains(visitor);
+        } finally {
+            lock.unlock();
+        }
     }
 
     public int getNumberOfVisitorsInHistory() {
-        return rideHistory.size();
+        lock.lock();
+        try {
+            return rideHistory.size();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
     public void printRideHistory() {
-        for (Visitor visitor : rideHistory) {
-            System.out.println(visitor.getName()+","+ visitor.getAge()+","+visitor.getId()+","+visitor.getTicketNumber()+","+visitor.getTicketType());
+        lock.lock();
+        try {
+            for (Visitor visitor : rideHistory) {
+                System.out.println(visitor.getName() + "," + visitor.getAge() + "," + visitor.getId() + "," + visitor.getTicketNumber() + "," + visitor.getTicketType());
+            }
+        } finally {
+            lock.unlock();
         }
     }
 
     public void sortVisitors() {
-        Collections.sort(rideHistory, new VisitorComparator());
-        System.out.println("Ride history sorted.");
+        lock.lock();
+        try {
+            Collections.sort(rideHistory, new VisitorComparator());
+            System.out.println("Ride history sorted.");
+        } finally {
+            lock.unlock();
+        }
     }
 
     //method that writes the details of all the Visitor that have taken for the Ride
     public void writeRideHistoryToFile(String filename) {
+        lock.lock();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (Visitor visitor : rideHistory) {
                 writer.write(visitor.getName() + "," + visitor.getAge() + "," + visitor.getId() + "," +
@@ -156,11 +190,14 @@ public class Ride implements RideInterface{
             System.out.println("Ride history successfully written to " + filename);
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
+        } finally {
+            lock.unlock();
         }
     }
 
     //method to the Ride class that can read the file
     public void readRideHistoryFromFile(String filename) {
+        lock.lock();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -172,7 +209,7 @@ public class Ride implements RideInterface{
                     String ticketNumber = details[3];
                     String ticketType = details[4];
                     Visitor visitor = new Visitor(name, age, id, ticketNumber, ticketType);
-                    rideHistory.add(visitor);// Add to ride history
+                    rideHistory.add(visitor);
                 } else {
                     System.out.println("Invalid data format in file: " + line);
                 }
@@ -182,6 +219,8 @@ public class Ride implements RideInterface{
             System.out.println("Error reading from file: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Error parsing age: " + e.getMessage());
+        } finally {
+            lock.unlock();
         }
     }
 
