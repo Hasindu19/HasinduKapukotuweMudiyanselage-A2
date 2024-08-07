@@ -98,7 +98,23 @@ public class AssignmentTwo {
     }
 
     public void partSix(){
+        Ride ride = new Ride("Ferris Wheel", 15, new Employee("Jane Smith", 28, "456", "Operator", 45000), 5, 0);
 
+        ride.addVisitorToQueue(new Visitor("Tom", 22, "V201", "T101", "Regular"));
+        ride.addVisitorToQueue(new Visitor("Jerry", 25, "V202", "T102", "VIP"));
+        ride.addVisitorToQueue(new Visitor("Mickey", 30, "V203", "T103", "Regular"));
+        ride.addVisitorToQueue(new Visitor("Minnie", 27, "V204", "T104", "VIP"));
+        ride.addVisitorToQueue(new Visitor("Donald", 24, "V205", "T105", "Regular"));
+
+        System.out.println("Running one cycle:");
+        ride.runOneCycle();
+
+        System.out.println("\nVisitors in ride history:");
+        ride.printRideHistory();
+
+        String filename = "ride_history.txt";
+        System.out.println("\nWriting ride history to file:");
+        ride.writeRideHistoryToFile(filename);
 
     }
 

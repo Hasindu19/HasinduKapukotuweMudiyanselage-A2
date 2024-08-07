@@ -147,7 +147,19 @@ public class Ride implements RideInterface{
         System.out.println("Ride history sorted.");
     }
 
-
+    //method that writes the details of all the Visitor that have taken for the Ride
+    public void writeRideHistoryToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Visitor visitor : rideHistory) {
+                writer.write(visitor.getName() + "," + visitor.getAge() + "," + visitor.getId() + "," +
+                        visitor.getTicketNumber() + "," + visitor.getTicketType());
+                writer.newLine();
+            }
+            System.out.println("Ride history successfully written to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
 
 
 }
