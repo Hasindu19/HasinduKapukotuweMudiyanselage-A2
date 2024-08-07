@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -8,17 +11,23 @@ public class Ride implements RideInterface{
     private Employee operator;
     private Queue<Visitor> visitorQueue = new LinkedList<>();
     private LinkedList<Visitor> rideHistory = new LinkedList<>();
+    private int maxRiders;
+    private int numOfCycles;
 
     public Ride() {
         this.name = "";
         this.duration = 0;
         this.operator = null;
+        this.maxRiders = 1; // Default to at least 1 rider
+        this.numOfCycles = 0; // Default to 0 cycles
     }
 
-    public Ride(String name, int duration, Employee operator) {
+    public Ride(String name, int duration, Employee operator, int maxRiders, int numOfCycles) {
         this.name = name;
         this.duration = duration;
         this.operator = operator;
+        this.maxRiders = maxRiders;
+        this.numOfCycles = 0;
     }
 
     public String getName() {
@@ -44,6 +53,23 @@ public class Ride implements RideInterface{
     public void setOperator(Employee operator) {
         this.operator = operator;
     }
+
+    public int getMaxRiders() {
+        return maxRiders;
+    }
+
+    public void setMaxRiders(int maxRiders) {
+        this.maxRiders = maxRiders;
+    }
+
+    public int getNumOfCycles() {
+        return numOfCycles;
+    }
+
+    public void setNumOfCycles(int numOfCycles) {
+        this.numOfCycles = numOfCycles;
+    }
+
 
     public void assignOperator(Employee operator) {
         this.operator = operator;
@@ -79,13 +105,20 @@ public class Ride implements RideInterface{
             System.out.println("No operator assigned to the ride.");
             return;
         }
+
         if (visitorQueue.isEmpty()) {
             System.out.println("No visitors in the queue.");
             return;
         }
-        Visitor visitor = visitorQueue.poll();
-        rideHistory.add(visitor);
-        System.out.println("Ride run for one cycle with visitor: " + visitor);
+
+        int riders = 0;
+        while (!visitorQueue.isEmpty() && riders < maxRiders) {
+            Visitor visitor = visitorQueue.poll();
+            addVisitorToHistory(visitor);
+            riders++;
+        }
+        numOfCycles++;
+        System.out.println("Ride run for one cycle with " + riders + " visitors.");
     }
 
 
@@ -113,6 +146,8 @@ public class Ride implements RideInterface{
         Collections.sort(rideHistory, new VisitorComparator());
         System.out.println("Ride history sorted.");
     }
+
+
 
 
 }

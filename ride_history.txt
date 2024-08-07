@@ -1,0 +1,5 @@
+Tom,22,V201,T101,Regular
+Jerry,25,V202,T102,VIP
+Mickey,30,V203,T103,Regular
+Minnie,27,V204,T104,VIP
+Donald,24,V205,T105,Regular
