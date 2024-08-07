@@ -5,16 +5,18 @@ import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+// Ride class implementing RideInterface
 public class Ride implements RideInterface{
     private String name;
     private int duration;
     private Employee operator;
-    private Queue<Visitor> visitorQueue = new LinkedList<>();
-    private LinkedList<Visitor> rideHistory = new LinkedList<>();
-    private int maxRiders;
-    private int numOfCycles;
+    private Queue<Visitor> visitorQueue = new LinkedList<>();//keep track of Visitors who are waiting to take the ride
+    private LinkedList<Visitor> rideHistory = new LinkedList<>();//Visitors who have taken the ride
+    private int maxRiders;//identify how many visitors a ride can take in one cycle
+    private int numOfCycles;//identify how many times the ride is run
     private final Lock lock = new ReentrantLock();
 
+    // Default constructor
     public Ride() {
         this.name = "";
         this.duration = 0;
@@ -23,6 +25,7 @@ public class Ride implements RideInterface{
         this.numOfCycles = 0; // Default to 0 cycles
     }
 
+    // Parameterized constructor
     public Ride(String name, int duration, Employee operator, int maxRiders) {
         this.name = name;
         this.duration = duration;
@@ -31,6 +34,7 @@ public class Ride implements RideInterface{
         this.numOfCycles = 0;
     }
 
+    // Getters and setters
     public String getName() {
         return name;
     }
@@ -71,17 +75,19 @@ public class Ride implements RideInterface{
         this.numOfCycles = numOfCycles;
     }
 
-
+    // Assigns an operator to the ride
     public void assignOperator(Employee operator) {
         this.operator = operator;
     }
 
     @Override
+    // Adds a visitor to the queue
     public void addVisitorToQueue(Visitor visitor) {
         visitorQueue.add(visitor);
         System.out.println("Visitor added to queue.");
     }
 
+    // Removes a visitor from the queue
     @Override
     public void removeVisitorFromQueue(Visitor visitor) {
         if (visitorQueue.remove(visitor)) {
@@ -91,6 +97,7 @@ public class Ride implements RideInterface{
         }
     }
 
+    // Prints the list of visitors in the queue
     @Override
     public void printQueue() {
         System.out.println("Visitors in queue:");
@@ -99,7 +106,7 @@ public class Ride implements RideInterface{
         }
     }
 
-
+    // Runs one cycle of the ride
     @Override
     public void runOneCycle() {
         if (operator == null) {
@@ -112,7 +119,7 @@ public class Ride implements RideInterface{
             return;
         }
 
-        lock.lock();
+        lock.lock();// Acquire lock
         try {
             int riders = 0;
             while (riders < maxRiders && !visitorQueue.isEmpty()) {
@@ -123,64 +130,68 @@ public class Ride implements RideInterface{
             numOfCycles++;
             System.out.println("Ride run successfully. Number of cycles: " + numOfCycles);
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
-
+    // Adds a visitor to the ride history
     public void addVisitorToHistory(Visitor visitor) {
-        lock.lock();
+        lock.lock();// Acquire lock
         try {
             rideHistory.add(visitor);
             System.out.println("Visitor added to ride history.");
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
+    // Checks if a visitor is in the ride history
     public boolean isVisitorInHistory(Visitor visitor) {
-        lock.lock();
+        lock.lock();// Acquire lock
         try {
             return rideHistory.contains(visitor);
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
+    // Gets the number of visitors in the ride history
     public int getNumberOfVisitorsInHistory() {
-        lock.lock();
+        lock.lock();// Acquire lock
         try {
             return rideHistory.size();
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
+    // Prints the ride history
     @Override
     public void printRideHistory() {
-        lock.lock();
+        lock.lock();// Acquire lock
         try {
             for (Visitor visitor : rideHistory) {
                 System.out.println(visitor.getName() + "," + visitor.getAge() + "," + visitor.getId() + "," + visitor.getTicketNumber() + "," + visitor.getTicketType());
             }
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
+    // Sorts the ride history
     public void sortVisitors() {
-        lock.lock();
+        lock.lock();// Acquire lock
         try {
             Collections.sort(rideHistory, new VisitorComparator());
             System.out.println("Ride history sorted.");
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
     //method that writes the details of all the Visitor that have taken for the Ride
     public void writeRideHistoryToFile(String filename) {
-        lock.lock();
+        lock.lock();// Acquire lock
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (Visitor visitor : rideHistory) {
                 writer.write(visitor.getName() + "," + visitor.getAge() + "," + visitor.getId() + "," +
@@ -191,13 +202,13 @@ public class Ride implements RideInterface{
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 
     //method to the Ride class that can read the file
     public void readRideHistoryFromFile(String filename) {
-        lock.lock();
+        lock.lock();// Acquire lock
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -220,7 +231,7 @@ public class Ride implements RideInterface{
         } catch (NumberFormatException e) {
             System.out.println("Error parsing age: " + e.getMessage());
         } finally {
-            lock.unlock();
+            lock.unlock();// Release lock
         }
     }
 

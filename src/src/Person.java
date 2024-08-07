@@ -2,18 +2,22 @@ public abstract class  Person {
     private String name;
     private int age;
     private String id;
+
+    // Default constructor
     public Person(){
         this.name = "";
         this.age = 0;
         this.id = "";
     }
 
+    // Parameterized constructor
     public Person(String name, int age, String id){
         this.name = name;
         this.age = age;
         this.id = id;
     }
 
+    // Getters and setters
     public String getName() {
         return name;
     }
